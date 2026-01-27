@@ -1,0 +1,47 @@
+#
+#
+#
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: user-generator-job
+  namespace: spring-kotlin-lab
+spec:
+  # Executa a cada 3 minutos (para testes locais / ajustar conforme necessário)
+  schedule: "*/3 * * * *"
+
+  # Configurações de histórico
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+
+  jobTemplate:
+    spec:
+      # Define quanto tempo o Job pode rodar antes de ser cancelado (5 minutos)
+      activeDeadlineSeconds: 300
+
+      template:
+        spec:
+          # Reinicia o Pod apenas se der erro no container
+          restartPolicy: OnFailure
+
+          containers:
+            - name: user-generator
+              image: spring-kotlin-lab-job:latest
+
+              # IMPORTANTE: Não tenta baixar a imagem de um registry remoto
+              imagePullPolicy: Never
+
+              # Carrega as variáveis de ambiente do Secret
+              envFrom:
+                - secretRef:
+                    name: postgres-credentials
+
+              # Limites de recursos (evita consumir muita memória)
+              resources:
+                requests:
+                  memory: "256Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "512Mi"
+                  cpu: "500m"

@@ -1,0 +1,7 @@
+# O que é um Namespace?
+# Pense nele como uma "pasta" dentro do Kubernetes. Agrupa seus recursos e evita misturar com outras aplicações.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: spring-kotlin-lab
