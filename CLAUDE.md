@@ -88,6 +88,8 @@ Conversions happen at layer boundaries to maintain separation.
 
 - Uses **JUnit 5** for test framework
 - Uses **MockK** (not Mockito) for mocking in Kotlin tests
+- Uses **SpringMockK 5.x** for Spring Boot integration tests (`@MockkBean`, `@SpykBean`)
+  - Important: Spring Boot 4.x requires SpringMockK 5.x (version 4.x is for Spring Boot 3.x)
 - Test structure follows same package hierarchy as source code
 - Tests use descriptive backtick method names (Kotlin convention)
 
